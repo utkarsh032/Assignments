@@ -11,7 +11,7 @@ const app = express()
 
 // Application-Level Middleware
 app.use(express.json())
-app.use(cors())
+app.use(cors('*'))
 app.use('/uploads', express.static('uploads'))
 
 // Base Route
