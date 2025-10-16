@@ -3,6 +3,7 @@ import dotenv from 'dotenv/config'
 import cors from 'cors'
 
 import { dbConnection } from './config/dbConnection.js'
+import candidateRoute from './routes/candidateRoutes.js'
 
 const PORT = process.env.PORT
 const app = express()
@@ -15,6 +16,9 @@ app.use(cors())
 app.get('/', (req, res) => {
   res.send({ message: 'Candidate Referral System API is running ...' })
 })
+
+// API Routes
+app.use('/api/candidates', candidateRoute)
 
 // Server Connection
 app.listen(PORT, () => {
