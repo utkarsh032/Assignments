@@ -2,6 +2,8 @@ import express from 'express'
 import dotenv from 'dotenv/config'
 import cors from 'cors'
 
+import { dbConnection } from './config/dbConnection.js'
+
 const PORT = process.env.PORT
 const app = express()
 
@@ -17,4 +19,7 @@ app.get('/', (req, res) => {
 // Server Connection
 app.listen(PORT, () => {
   console.log(`Server Started successfully on PORT : ${PORT}`)
+
+  // Database Connection
+  dbConnection()
 })
