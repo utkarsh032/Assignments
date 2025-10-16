@@ -9,11 +9,14 @@ export const addCandidate = async (req, res) => {
         message: 'All Fields are required'
       })
     }
+
+    const resumeUrl = req.file ? `/uploads/${req.file.filename}` : null
     const candidate = await Candidate.create({
       name,
       email,
       phone,
       jobTitle,
+      resumeUrl,
       status
     })
     res.status(201).json({ message: 'Candidate Added Successfully', candidate })

@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv/config'
 import cors from 'cors'
+import multer from 'multer'
 
 import { dbConnection } from './config/dbConnection.js'
 import candidateRoute from './routes/candidateRoutes.js'
@@ -11,6 +12,7 @@ const app = express()
 // Application-Level Middleware
 app.use(express.json())
 app.use(cors())
+app.use('/uploads', express.static('uploads'))
 
 // Base Route
 app.get('/', (req, res) => {
