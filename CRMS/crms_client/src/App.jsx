@@ -1,11 +1,15 @@
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
+import { Dashboard } from './components/Dashboard'
 import { Navbar } from './components/Navbar'
 
 function App () {
   return (
     <>
       <Navbar />
-      <h2>Ref. Tracker</h2>
+      <Routes>
+        <Route path='/dashboard' element={<Dashboard />} />
+      </Routes>
     </>
   )
 }

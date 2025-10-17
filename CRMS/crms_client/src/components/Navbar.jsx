@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 export const Navbar = () => {
   return (
-    <nav className='flex items-center justify-between px-6 py-3 bg-white shadow-sm sticky top-0 z-50'>
+    <nav className=' flex items-center justify-between px-6 py-3 bg-white shadow-sm sticky top-0 z-50'>
       <RefTrackLogo />
 
       <div className='flex items-center gap-3 sm:gap-5'>
