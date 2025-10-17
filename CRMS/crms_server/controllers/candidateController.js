@@ -8,7 +8,12 @@ export const addCandidate = async (req, res) => {
       return res.status(400).json({ message: 'All Fields are required' })
     }
 
-    const resumeUrl = req.file ? `/uploads/${req.file.filename}` : null
+    const BASE_URL = `${req.protocol}://${req.get('host')}`
+
+    const resumeUrl = req.file
+      ? `${BASE_URL}/uploads/${req.file.filename}`
+      : null
+
     const candidate = await Candidate.create({
       name,
       email,
