@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { RiUserAddLine } from 'react-icons/ri'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 export const ReferralForm = () => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
@@ -25,6 +26,16 @@ export const ReferralForm = () => {
   const handleSubmit = async e => {
     e.preventDefault()
 
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.jobTitle
+    ) {
+      toast.error('⚠️ Please fill all required fields!')
+      return
+    }
+
     const payload = new FormData()
     payload.append('name', formData.name)
     payload.append('email', formData.email)
@@ -39,10 +50,23 @@ export const ReferralForm = () => {
           'Content-Type': 'multipart/form-data'
         }
       })
-      console.log('Submitted:', response.data)
+
+      if (response.status === 201) {
+        toast.success('🎉 Referral submitted successfully!')
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          jobTitle: '',
+          status: '',
+          resume: null
+        })
+      } else {
+        toast.error(`❌ ${response.data.message || 'Something went wrong!'}`)
+      }
     } catch (error) {
       console.error('Error submitting referral:', error)
-      alert('Failed to submit referral')
+      toast.error('🚨 Failed to submit referral. Please try again later.')
     }
   }
 
@@ -99,10 +123,16 @@ export const ReferralForm = () => {
           </label>
           <input
             type='tel'
+            inputMode='numeric'
             name='phone'
             placeholder='9876543210'
             value={formData.phone}
-            onChange={handleChange}
+            onChange={e => {
+              const value = e.target.value
+              if (/^\d{0,10}$/.test(value)) {
+                setFormData(prev => ({ ...prev, phone: value }))
+              }
+            }}
             className='w-full border border-gray-300 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-[#0DA2E7]'
           />
         </div>
