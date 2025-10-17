@@ -1,1 +1,46 @@
 @import 'tailwindcss';
+
+@theme {
+  --vivid-blue: #0da2e7;
+  --vivid-blue-hover: #0989c9;
+  --neutral-bg: #f9fafb;
+  --neutral-text: #1f2937;
+
+  --color-primary: var(--vivid-blue);
+  --color-primary-hover: var(--vivid-blue-hover);
+}
+
+/* Navigation Link */
+.navLink {
+  background-color: white;
+  color: var(--neutral-text);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: 1px solid #e5e7eb;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+}
+
+/* Hover state */
+.navLink:hover {
+  background-color: var(--neutral-bg);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+/* Active (current page) */
+.navLink.active {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 6px rgba(13, 162, 231, 0.3);
+  transform: none;
+}
+
+.navLink.active:hover {
+  background-color: var(--color-primary-hover);
+}
