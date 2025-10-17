@@ -3,6 +3,6 @@ export const fetchCandidates = async () => {
 
   const response = await fetch(`${API_BASE_URL}`)
   const data = await response.json()
-  console.log(data.candidate)
-  return data.candidate
+  // console.log('candidate data', data.candidates)
+  return data.candidates
 }

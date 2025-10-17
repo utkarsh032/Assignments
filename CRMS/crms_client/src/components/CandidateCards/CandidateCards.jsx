@@ -11,6 +11,7 @@ export const CandidateCards = ({ candidates }) => {
           email={candidate.email}
           status={candidate.status}
           jobTitle={candidate.jobTitle}
+          resumeUrl={candidate.resumeUrl}
         />
       ))}
     </div>

@@ -1,16 +1,39 @@
-import React from 'react'
-import { FiUser } from 'react-icons/fi'
+import React, { useState } from 'react'
+import { FiUser, FiFileText } from 'react-icons/fi'
 import { BsSuitcaseLg } from 'react-icons/bs'
+import axios from 'axios'
 
-export const Card = ({ name, email, status, jobTitle }) => {
-  // status color
+export const Card = ({
+  _id,
+  name,
+  email,
+  status: initialStatus,
+  jobTitle,
+  resumeUrl
+}) => {
+  const [status, setStatus] = useState(initialStatus)
+  const [loading, setLoading] = useState(false)
+
+  // status colors
   const statusColors = {
-    Pending: 'bg-yellow-500 ',
-    Hired: 'bg-green-500 ',
-    Reviewed: 'bg-sky-500 '
+    Pending: 'bg-yellow-500',
+    Hired: 'bg-green-500',
+    Reviewed: 'bg-sky-500'
   }
 
-  const statusStyle = statusColors[status] || statusColors.Default
+  const handleStatusChange = async e => {
+    const newStatus = e.target.value
+    setStatus(newStatus)
+    setLoading(true)
+    try {
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/${_id}/status`, {
+        status: newStatus
+      })
+    } catch (error) {
+      console.error('Failed to update status:', error)
+    }
+    setLoading(false)
+  }
 
   return (
     <div
@@ -32,17 +55,38 @@ export const Card = ({ name, email, status, jobTitle }) => {
         </div>
 
         {/* Status Badge */}
-        <span
-          className={` px-3 py-1 text-sm text-white font-medium  rounded-full ${statusStyle}`}
+        <div
+          className={`px-3 py-1 text-sm text-white font-medium rounded-full ${statusColors[status]}`}
         >
-          {status}
-        </span>
+          <select
+            value={status}
+            onChange={handleStatusChange}
+            disabled={loading}
+            className={`appearance-none bg-black outline-none cursor-pointer  ${statusColors[status]}`}
+          >
+            <option value='Pending'>Pending</option>
+            <option value='Reviewed'>Reviewed</option>
+            <option value='Hired'>Hired</option>
+          </select>
+        </div>
       </div>
 
-      {/* Job Info */}
-      <div className='flex items-center gap-2 text-gray-700 text-sm'>
-        <BsSuitcaseLg className='text-gray-500 text-base' />
-        <span>{jobTitle}</span>
+      <div className='flex justify-between'>
+        {/* Job Info */}
+        <div className='flex items-center gap-2 text-gray-700 text-sm'>
+          <BsSuitcaseLg className='text-gray-500 text-base' />
+          <span>{jobTitle}</span>
+        </div>
+
+        {/* Resume */}
+        {resumeUrl && (
+          <div className='flex items-center gap-2  text-blue-600 hover:underline text-sm'>
+            <FiFileText />
+            <a href={resumeUrl} target='_blank' rel='noopener noreferrer'>
+              View Resume
+            </a>
+          </div>
+        )}
       </div>
     </div>
   )
