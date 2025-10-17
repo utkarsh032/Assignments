@@ -9,12 +9,13 @@ export const Card = ({
   email,
   status: initialStatus,
   jobTitle,
+  phone,
   resumeUrl
 }) => {
   const [status, setStatus] = useState(initialStatus)
   const [loading, setLoading] = useState(false)
 
-  // status colors
+  // Status color mapping
   const statusColors = {
     Pending: 'bg-yellow-500',
     Hired: 'bg-green-500',
@@ -37,32 +38,33 @@ export const Card = ({
 
   return (
     <div
-      className='bg-white border border-gray-200 rounded-xl px-6 py-4 
-                 shadow-sm hover:shadow-md transition-shadow duration-300 
-                 flex flex-col gap-3 cursor-pointer'
+      className='bg-white border border-gray-200 rounded-xl p-4 sm:p-5
+                 shadow-sm hover:shadow-md transition-all duration-300
+                 flex flex-col gap-4 cursor-pointer w-full'
     >
       {/* Top Section */}
-      <div className='flex justify-between items-start'>
+      <div className='flex sm:flex-row justify-between gap-3 sm:gap-0'>
         {/* User Info */}
-        <div className='flex gap-3 items-center'>
-          <div className='p-3 bg-gray-100 rounded-full'>
-            <FiUser className='text-gray-500 text-xl' />
+        <div className='flex items-start gap-3'>
+          <div className='p-3 bg-gray-100 rounded-full flex-shrink-0'>
+            <FiUser className='text-gray-500 text-2xl' />
           </div>
-          <div>
-            <p className='font-semibold text-gray-800 text-lg'>{name}</p>
-            <p className='text-gray-500 text-sm'>{email}</p>
+          <div className='flex flex-col'>
+            <p className='font-semibold text-gray-800 text-lg break-words'>
+              {name}
+            </p>
+            <p className='text-gray-500 text-sm break-words'>{email}</p>
+            <p className='text-gray-500 text-sm'>{phone}</p>
           </div>
         </div>
 
-        {/* Status Badge */}
-        <div
-          className={`px-3 py-1 text-sm text-white font-medium rounded-full ${statusColors[status]}`}
-        >
+        {/* Status Selector */}
+        <div className='self-start '>
           <select
             value={status}
             onChange={handleStatusChange}
             disabled={loading}
-            className={`appearance-none bg-black outline-none cursor-pointer  ${statusColors[status]}`}
+            className={`appearance-none px-3 py-1 text-sm text-white font-medium rounded-full outline-none cursor-pointer ${statusColors[status]} `}
           >
             <option value='Pending'>Pending</option>
             <option value='Reviewed'>Reviewed</option>
@@ -71,17 +73,18 @@ export const Card = ({
         </div>
       </div>
 
-      <div className='flex justify-between'>
+      {/* Bottom Section */}
+      <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 text-sm'>
         {/* Job Info */}
-        <div className='flex items-center gap-2 text-gray-700 text-sm'>
+        <div className='flex items-center gap-2 text-gray-700'>
           <BsSuitcaseLg className='text-gray-500 text-base' />
-          <span>{jobTitle}</span>
+          <span className='break-words'>{jobTitle}</span>
         </div>
 
-        {/* Resume */}
+        {/* Resume Link */}
         {resumeUrl && (
-          <div className='flex items-center gap-2  text-blue-600 hover:underline text-sm'>
-            <FiFileText />
+          <div className='flex items-center gap-2 text-blue-600 hover:underline'>
+            <FiFileText className='text-base' />
             <a href={resumeUrl} target='_blank' rel='noopener noreferrer'>
               View Resume
             </a>

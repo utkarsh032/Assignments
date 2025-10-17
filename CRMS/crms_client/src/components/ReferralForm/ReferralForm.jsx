@@ -99,10 +99,16 @@ export const ReferralForm = () => {
           </label>
           <input
             type='tel'
+            inputMode='numeric'
             name='phone'
             placeholder='9876543210'
             value={formData.phone}
-            onChange={handleChange}
+            onChange={e => {
+              const value = e.target.value
+              if (/^\d{0,10}$/.test(value)) {
+                setFormData(prev => ({ ...prev, phone: value }))
+              }
+            }}
             className='w-full border border-gray-300 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-[#0DA2E7]'
           />
         </div>
