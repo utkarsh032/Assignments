@@ -16,9 +16,9 @@ export const Navbar = () => {
         <NavLink
           to='/dashboard'
           className={({ isActive }) =>
-            `transition-all duration-300 text-gray-700 hover:text-blue-600 ${
-              isActive ? 'font-semibold text-blue-600' : ''
-            }`
+            isActive
+              ? 'bg-blue-600 text-white px-4 py-2 rounded-md shadow-sm transition-all duration-300'
+              : ' px-4 py-2 rounded-md hover:bg-blue-600 hover:text-white transition-all duration-300'
           }
         >
           Dashboard
@@ -27,9 +27,9 @@ export const Navbar = () => {
         <NavLink
           to='/referral-form'
           className={({ isActive }) =>
-            `transition-all duration-300 px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 ${
-              isActive ? 'bg-blue-600' : ''
-            }`
+            isActive
+              ? 'bg-blue-600 text-white px-4 py-2 rounded-md shadow-sm transition-all duration-300'
+              : ' px-4 py-2 rounded-md hover:bg-blue-600 hover:text-white transition-all duration-300'
           }
         >
           Referral Form
