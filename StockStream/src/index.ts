@@ -1,7 +1,7 @@
-import app from './app/server'
+import app from "./app/server";
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`StockStream Server is running on port ${PORT}`)
-})
+  console.log(`StockStream Server is running on port ${PORT}`);
+});
