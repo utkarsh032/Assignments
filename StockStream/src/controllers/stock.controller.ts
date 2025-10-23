@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../app/prisma";
+import logger from "../utils/logger";
+import { stockSchema } from "../validators/stock.validator";
 
 // Controller to get all stocks
 export const getAllStocks = async (req: Request, res: Response) => {
@@ -14,15 +16,21 @@ export const getAllStocks = async (req: Request, res: Response) => {
 // Controller to create a new stock
 export const createStock = async (req: Request, res: Response) => {
   try {
-    const { symbol, companyName, price } = req.body;
+    const parsed = stockSchema.parse(req.body);
 
     const stock = await prisma.stock.create({
-      data: { symbol, companyName, price },
+      data: parsed,
     });
 
+    logger.info(`Stock created: ${parsed.symbol}`);
     res.status(201).json(stock);
-  } catch (error) {
-    res.status(500).json({ message: "Error creating stock", error });
+  } catch (error: any) {
+    logger.error(error);
+    if (error.name === "ZodError") {
+      res.status(400).json({ message: error.errors });
+    } else {
+      res.status(500).json({ message: "Error creating stock", error });
+    }
   }
 };
 
