@@ -1,4 +1,4 @@
-# StckkStream API
+# StackStream API
 
 A robust backend trading system built with Node.js, TypeScript, and Prisma that handles stock management, order processing, trade fills, and portfolio tracking.
 
