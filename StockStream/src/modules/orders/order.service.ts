@@ -18,10 +18,7 @@ export const orderService = {
         ) {
           return existing; // idempotent success
         } else {
-          throw new AppError(
-            409,
-            "Conflict: clientOrderId with different payload"
-          );
+          throw AppError("Conflict: clientOrderId with different payload", 409);
         }
       }
     }

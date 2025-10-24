@@ -1,14 +1,22 @@
-export class AppError extends Error {
-  public readonly statusCode: number;
-  public readonly isOperational: boolean;
 
-  constructor (message: string, statusCode = 400, isOperational = true) {
-    super(message);
-    Object.setPrototypeOf(this, new.target.prototype);
+export interface AppErrorType extends Error {
+  statusCode: number;
+  isOperational: boolean;
+}
 
-    this.statusCode = statusCode;
-    this.isOperational = isOperational;
+export function AppError (
+  message: string,
+  statusCode = 400,
+  isOperational = true
+): AppErrorType {
+  const error = new Error(message) as AppErrorType;
+  error.statusCode = statusCode;
+  error.isOperational = isOperational;
 
-    Error.captureStackTrace(this);
-  }
+  // Fix prototype chain
+  Object.setPrototypeOf(error, new.target?.prototype ?? Object.prototype);
+
+  Error.captureStackTrace(error, AppError);
+
+  return error;
 }
