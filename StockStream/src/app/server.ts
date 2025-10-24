@@ -3,6 +3,9 @@ import cors from "cors";
 import "dotenv/config";
 import stockRouter from "../routes/stock.routes";
 import { errorHandler } from "../middleware/errorHandler";
+import orderRouter from "../routes/order.routes";
+import fillRouter from "../routes/fill.routes";
+import portfolioRouter from "../routes/portfolio.routes";
 
 const app = express();
 
@@ -17,5 +20,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/stocks", stockRouter);
+app.use("/api/orders", orderRouter);
+app.use("/api/fills", fillRouter);
+app.use("/api/portfolio", portfolioRouter);
 
 export default app;
